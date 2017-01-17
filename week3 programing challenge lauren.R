@@ -1,6 +1,6 @@
 setwd("/users/laurenfine/desktop/onedrive/winter 2017/statistics/com521-lauren")
 library(readr)
-> week3_dataset_lauren <- read_csv("/users/laurenfine/desktop/onedrive/winter 2017/statistics/com521-lauren/week3_dataset-lauren.csv")
+week3_dataset_lauren <- read_csv("/users/laurenfine/desktop/onedrive/winter 2017/statistics/com521-lauren/week3_dataset-lauren.csv")
 
 load("~/Desktop/OneDrive/Winter 2017/Statistics/com521-lauren/week2_dataset-lauren copy.RData")
 
@@ -24,11 +24,14 @@ boxplot(week3_dataset_lauren$x, week2.dataset)
 hist(week3_dataset_lauren$x)
 hist(week2.dataset)
 
+library(ggplot2)
 ggplot(data=week3_dataset_lauren)+geom_point()+aes(x=x, y=y)
 
 week3_dataset_lauren$j<-as.logical(week3_dataset_lauren$j)
 week3_dataset_lauren$i<-as.logical(week3_dataset_lauren$i)
 week3_dataset_lauren$k<-as.factor(week3_dataset_lauren$k)
+
+install.packages("ggplot2")
 
 ggplot(data=week3_dataset_lauren)+geom_point()+aes(x=x, y=y, color=i, shape=j, size=k)
 
