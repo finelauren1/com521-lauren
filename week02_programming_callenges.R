@@ -1,3 +1,4 @@
+setwd("~/Desktop/OneDrive/Winter 2017/Statistics/com521-lauren")
 load("~/Desktop/OneDrive/Winter 2017/Statistics/com521-lauren/week2_dataset-lauren copy.RData")
 
 length(week2.dataset)
@@ -12,8 +13,10 @@ my.mean(week2.dataset)
 
 my.median<-function(week2.dataset) {sort(week2.dataset)[length(week2.dataset)/2]}
 my.median(week2.dataset)
-sort(round(week2.dataset))
-rounded mode: 21
+
+rev(sort(table(week2.dataset)))[1]
+rev(sort(table(round(week2.dataset))))[1]
+
 
 boxplot(week2.dataset)
 hist(week2.dataset)
