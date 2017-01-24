@@ -76,7 +76,6 @@ views<-merge(x = MonthSessionsMobile, y = MonthViews5000, by = "month", all.x=TR
 #PC6
 views$pct<-views$totalsbymonth.mobile/views$monthlyviews
 
-as.POSIXct(as.character(views$month), format="%m/%d/%Y %H:%M:%S %p", tz="UTC")
 views$month<-as.Date(views$month, format="%m/%d/%Y %H:%M:%S %p", tz="UTC")
 class(views$month)
 
