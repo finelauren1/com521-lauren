@@ -47,11 +47,38 @@ Top5000[sample(seq(1, nrow(Top5000)), 5),]
 #PC3
 MonthViews5000<-data.frame(Top5000$Month, Top5000$Pageviews)
 head(MonthViews5000)
+monthlyviews<-tapply(Top5000$Pageviews, Top5000$Month, sum)
+MonthViews5000<-data.frame(month=names(monthlyviews), monthlyviews)
+
 as.POSIXct(as.character(Top5000$Month), format="%m/%d/%y %H:%M:%S %p", tz="UTC")
 #Returns NA for everything. Can't figure out why.
 
 #PC4
 library(plyr)
 count(Mobile$Operating_System)
-tapply(Mobile$Sessions, Mobile$Operating_System, sum)
-# That gives me total sums. How do I split it into months
+byOS<-tapply(Mobile$Sessions, Mobile$Operating_System, sum)
+OSTotals<-data.frame(Platform=names(byOS), byOS)
+#Oops, that's a dataframe for platforms and totals by platform
+
+mobile.os.monthly.views<-Mobile$Sessions*Mobile$PagesPerSession
+totalsbymonth.mobile<-tapply(mobile.os.monthly.views, Mobile$Month, sum)
+MonthSessionsMobile<-data.frame(month=names(totalsbymonth.mobile), totalsbymonth.mobile)
+
+
+#PC5
+merge(x = Mobile, y = Top5000, by = "Month", all.x=TRUE)
+#That merged everything, I think. I want to just merge a few columns
+
+merge(x = MonthSessionsMobile, y = MonthViews5000, by = "month", all.x=TRUE, all.y=TRUE)
+views<-merge(x = MonthSessionsMobile, y = MonthViews5000, by = "month", all.x=TRUE, all.y=TRUE)
+
+
+#PC6
+views$pct<-views$totalsbymonth.mobile/views$monthlyviews
+
+as.POSIXct(as.character(views$month), format="%m/%d/%Y %H:%M:%S %p", tz="UTC")
+views$month<-as.Date(views$month, format="%m/%d/%Y %H:%M:%S %p", tz="UTC")
+class(views$month)
+
+#PC7
+ggplot(data=views)+aes(x=month, y=pct)+geom_point()+scale_y_continuous(limits=c(0,1))
