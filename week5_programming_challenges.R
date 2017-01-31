@@ -69,6 +69,7 @@ random.vector<-runif(n=10000, min=0, max=9)
 #(b) Take the mean of that vector. Draw a histogram.
 mean(random.vector)
 hist(random.vector)
+sd(random.vector)
 
 #Create 100 random samples of 2 items each from your randomly generated data
 #and take the mean of each sample. Create a new vector that contains those means. 
@@ -111,14 +112,14 @@ hist(sapply(rep(1,100), mean.of.hundred))
 ##How do I create a function where I can tell R how many numbers to create a mean from?
 #So I don't have to create 3 separate functions? 
 
-mean.of.x<-function(random.vector, n=2) {
-  my.sample<-sample(random.vector, n)
+mean.of.x<-function(sample.size) {
+  my.sample<-sample(random.vector, sample.size)
   mean(my.sample)
 }
 
-mean.of.x(random.vector,2)
-mean.of.x(random.vector,10)
-mean.of.x(random.vector,100)
+hist(replicate(100, {mean.of.x(sample.size=2)}))
+hist(replicate(100, {mean.of.x(sample.size=10)}))
+hist(replicate(100, {mean.of.x(sample.size=100)}))
 ##How do I know if this is doing what I want it to be doing, taking the mean of 2, 10, or 100 observations?
 
 
@@ -138,9 +139,14 @@ hist(random.vector)
 
 
 #c.
-mean.of.x(normal.distribution.vector, n=2)
-hist(sapply(rep(1,100), mean.of.x(normal.distribution.vector, n=2)))
-#well that hist. returns an error
+mean.of.ndv<-function(sample.size) {
+  my.sample<-sample(normal.distribution.vector, sample.size)
+  mean(my.sample)
+}
+
+hist(replicate(100, {mean.of.ndv(sample.size=2)}))
+hist(replicate(100, {mean.of.ndv(sample.size=10)}))
+hist(replicate(100, {mean.of.ndv(sample.size=100)}))
 
 #d.
 mean.of.x(normal.distribution.vector, n=10)
