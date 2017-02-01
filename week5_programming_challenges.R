@@ -145,9 +145,16 @@ mean.of.ndv<-function(sample.size) {
 }
 
 hist(replicate(100, {mean.of.ndv(sample.size=2)}))
+
+
+#d.
+
 hist(replicate(100, {mean.of.ndv(sample.size=10)}))
 hist(replicate(100, {mean.of.ndv(sample.size=100)}))
 
-#d.
-mean.of.x(normal.distribution.vector, n=10)
-mean.of.x(normal.distribution.vector, n=100)
+#or
+hist(sapply(rep(1,100), function(x) {mean(sample(normal.distribution.vector,2))}))
+hist(sapply(rep(1,100), function(x) {mean(sample(normal.distribution.vector,10))}))
+hist(sapply(rep(1,100), function(x) {mean(sample(normal.distribution.vector,100))}))
+
+#if you look at the variance, it gets smaller ever time (even though normal distribution looks similar)
