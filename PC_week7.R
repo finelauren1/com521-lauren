@@ -1,19 +1,17 @@
 #PC0 Load Data
-library(haven)
-lilypad_anonymized <- read_dta("~/Downloads/lilypad_anonymized.dta")
+library(foreign)
+> lilypad_anonymized<-read.dta("~/Downloads/lilypad_anonymized.dta")
 View(lilypad_anonymized)
+lp<-lilypad_anonymized
 
 #PC1
 #a. Reproduce both Table 1 and Table 2
 table(lp$gender, lp$order_type)
 gen.table<-table(lp$gender, lp$order_type)
-colnames(gen.table)<-c("arduino only","both","lilypad only")
-rownames(gen.table)<-c("female","male","unknown")
 
-US.gen.table<-table(lp$gender, lp$order_type, lp$country==81)
-colnames(US.gen.table)<-c("arduino only","both","lilypad only")
-rownames(US.gen.table)<-c("female","male","unknown")
+US.gen.table<-table(lp$gender, lp$order_type, lp$country=="United States")
 #The second of the two tables in produced is the one we want here. Not sure how to get rid of the first
+
 
 
 #b.Run a X^2 test on both tables. Compare to the paper.
@@ -43,14 +41,18 @@ day.1<-c(42,19)
 day.2<-c(31,14)
 attrition<-data.frame(day.1,day.2)
 rownames(attrition)<-c("mako","tommy")
+attrition<-as.matrix(attrition)
 
 chisq.test(attrition)
 prop.test(attrition)
-#prop.test doesn't work for some reason
+#this is giving me the wrong numbers
+
+flipped.attrition<-t(attrition)
+prop.test(flipped.attrition[2,], flipped.attrition[1,])
 
 #PC3
 #a. Download and imput data
-library(haven)
+library(foreign)
 Halloween2012_2014_2015_PLOS <- read_dta("~/Downloads/Halloween Dataverse Files/Halloween2012-2014-2015_PLOS.dta")
 eating<-Halloween2012_2014_2015_PLOS
 
@@ -65,3 +67,5 @@ rownames(fruit.obama)<-c("didn't see Michelle", "saw Michelle")
 chisq.test(fruit.obama)
 #this doesn't suggest strong enough evidence for dependence. If we controlled for more variables
 #by using more of the data, perhaps we would find a link. 
+
+
