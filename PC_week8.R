@@ -67,10 +67,12 @@ Halloween<-Halloween2012_2014_2015_PLOS
 #a) compute linear model
 fruitobama.lm<-lm(obama~fruit, data=Halloween)
 fruitobama.lm
+summary(fruitobama.lm)
 
 #b) add a control for age and year
 fr.obam.age.year.lm<-lm(obama~fruit+age+treat_year, data=Halloween)
 fr.obam.age.year.lm
+summary(fruitobama.lm)
 
 #PC7. Residuals for Model A
 residuals(fruitobama.lm)
@@ -85,6 +87,7 @@ year2015<-subset(Halloween, year==2015)
 
 obam.fr.2012.lm<-lm(obama~fruit, data=year2012)
 obam.fr.2012.lm
+summary(obam.fr.2012.lm)
 
 obam.fr.2014.lm<-lm(obama~fruit, data=year2014)
 obam.fr.2014.lm
