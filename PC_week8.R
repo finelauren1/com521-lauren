@@ -24,15 +24,15 @@ w3d$k<-factor(w3d$k, levels=c(0,1,2,3), labels=c("none", "some", "lots", "all"))
 
 #PC4.Generate 3 linear models and interpret.
 #a) 
-xy.lm<-lm(x~y, data=w3d)
+xy.lm<-lm(y~x, data=w3d)
 xy.lm
 
 #b)
-xyij.lm<-lm(x~y+i+j, data=w3d)
+xyij.lm<-lm(y~x+i+j, data=w3d)
 xyij.lm
 
 #c)
-xyijk.lm<-lm(x~y+i+j+k, data=w3d)
+xyijk.lm<-lm(y~x+i+j+k, data=w3d)
 xyijk.lm
 
 #interpret
@@ -65,14 +65,14 @@ Halloween2012_2014_2015_PLOS <- read_dta("~/Downloads/Halloween Dataverse Files/
 Halloween<-Halloween2012_2014_2015_PLOS
 
 #a) compute linear model
-fruitobama.lm<-lm(obama~fruit, data=Halloween)
+fruitobama.lm<-lm(fruit~obama, data=Halloween)
 fruitobama.lm
 summary(fruitobama.lm)
 
 #b) add a control for age and year
-fr.obam.age.year.lm<-lm(obama~fruit+age+treat_year, data=Halloween)
+fr.obam.age.year.lm<-lm(fruit~obama+age+treat_year, data=Halloween)
 fr.obam.age.year.lm
-summary(fruitobama.lm)
+summary(fr.obam.age.year.lm)
 
 #PC7. Residuals for Model A
 residuals(fruitobama.lm)
