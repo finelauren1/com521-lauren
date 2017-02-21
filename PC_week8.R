@@ -82,3 +82,12 @@ plot(Halloween$obama, residuals(fruitobama.lm))
 year2012<-subset(Halloween, year==2012)
 year2014<-subset(Halloween, year==2014)
 year2015<-subset(Halloween, year==2015)
+
+obam.fr.2012.lm<-lm(obama~fruit, data=year2012)
+obam.fr.2012.lm
+
+obam.fr.2014.lm<-lm(obama~fruit, data=year2014)
+obam.fr.2014.lm
+
+obam.fr.2015.lm<-lm(obama~fruit, data=year2015)
+obam.fr.2015.lm
