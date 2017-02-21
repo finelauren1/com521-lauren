@@ -62,14 +62,23 @@ stargazer(xyijk.lm, type="text")
 #PC7. Load michelle Obama data.
 library(haven)
 Halloween2012_2014_2015_PLOS <- read_dta("~/Downloads/Halloween Dataverse Files/Halloween2012-2014-2015_PLOS.dta")
-Obama<-Halloween2012_2014_2015_PLOS
+Halloween<-Halloween2012_2014_2015_PLOS
 
 #a) compute linear model
-
+fruitobama.lm<-lm(obama~fruit, data=Halloween)
+fruitobama.lm
 
 #b) add a control for age and year
+fr.obam.age.year.lm<-lm(obama~fruit+age+treat_year, data=Halloween)
+fr.obam.age.year.lm
 
 #PC7. Residuals for Model A
+residuals(fruitobama.lm)
+hist(residuals(fruitobama.lm))
+plot(Halloween$obama, residuals(fruitobama.lm))
+#this is returning an error for some reason
 
 #PC8. Run 7a) 3 times with just 2012, just 2014, and just 2015 data.
-
+year2012<-subset(Halloween, year==2012)
+year2014<-subset(Halloween, year==2014)
+year2015<-subset(Halloween, year==2015)
