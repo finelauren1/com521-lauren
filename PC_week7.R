@@ -53,7 +53,7 @@ prop.test(flipped.attrition[2,], flipped.attrition[1,])
 #PC3
 #a. Download and imput data
 library(foreign)
-Halloween2012_2014_2015_PLOS <- read_dta("~/Downloads/Halloween Dataverse Files/Halloween2012-2014-2015_PLOS.dta")
+Halloween2012_2014_2015_PLOS <- read.dta("~/Downloads/Halloween Dataverse Files/Halloween2012-2014-2015_PLOS.dta")
 eating<-Halloween2012_2014_2015_PLOS
 
 
