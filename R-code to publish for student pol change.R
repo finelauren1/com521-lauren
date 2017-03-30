@@ -249,40 +249,50 @@ full.pol.diff<-lm(pol.diff~major.types+inst.PV.y+male+non.white, data=pv.recoded
 summary(lm(pol.diff~major.types+inst.PV.y+male+non.white+Pol.Discuss, data=pv.recoded))
 #It does seem to have an affect on the political difference, but it makes the race variable disappear
 #now the R2 is .0070, so it explains .7% of the variability. What do I make of that
-#it also cuts my dataset in half, so I don't think I'll include it in the final model.
+#it also cuts my dataset in half, so I will not include it in the final model.
 
 #Time to make tables
 table(pv.recoded$PVF, pv.recoded$PVS)
 prop.table(table(pv.recoded$PVF, pv.recoded$PVS))
 
-corr.data<-data.frame(pv.recoded$PVF, 
+corr.data2<-data.frame(pv.recoded$PVF, 
                       pv.recoded$PVS, 
                       pv.recoded$pol.diff, 
                       pv.recoded$inst.PV.y, 
                       pv.recoded$major.types, 
                       pv.recoded$male, 
-                      pv.recoded$non.white)
+                      pv.recoded$non.white,
+                      pv.recoded$state.pol)
 library(plyr)
-corr.data<-rename(corr.data, c("pv.recoded.PVF"="PVF", 
+corr.data2<-rename(corr.data2, c("pv.recoded.PVF"="PVF", 
                   "pv.recoded.PVS"="PVS", 
                   "pv.recoded.pol.diff"="pol.diff", 
                   "pv.recoded.inst.PV.y"="inst.PV.y", 
                   "pv.recoded.major.types"="major.types", 
                   "pv.recoded.male"="male", 
-                  "pv.recoded.non.white"="non.white"))
-corr.data$male<-as.numeric(corr.data$male)
-corr.data$non.white<-as.numeric(corr.data$non.white)
-corr.data$SS<-corr.data$major.types=="SS"
-corr.data$STEM<-corr.data$major.types=="STEM"
-corr.data$Hum<-corr.data$major.types=="Hum"
-corr.data$Other<-corr.data$major.types=="Other"
-corr.data$major.types=NULL
-corr.data$SS<-as.numeric(corr.data$SS)
-corr.data$STEM<-as.numeric(corr.data$STEM)
-corr.data$Hum<-as.numeric(corr.data$Hum)
-corr.data$Other<-as.numeric(corr.data$Other)
+                  "pv.recoded.non.white"="non.white",
+                  "pv.recoded.state.pol"="state.pol"))
+corr.data2$male<-as.numeric(corr.data2$male)
+corr.data2$non.white<-as.numeric(corr.data2$non.white)
+corr.data2$SS<-corr.data2$major.types=="SS"
+corr.data2$STEM<-corr.data2$major.types=="STEM"
+corr.data2$Hum<-corr.data2$major.types=="Hum"
+corr.data2$Other<-corr.data2$major.types=="Other"
+corr.data2$major.types=NULL
+corr.data2$SS<-as.numeric(corr.data2$SS)
+corr.data2$STEM<-as.numeric(corr.data2$STEM)
+corr.data2$Hum<-as.numeric(corr.data2$Hum)
+corr.data2$Other<-as.numeric(corr.data2$Other)
+corr.data2$RState<-corr.data2$state.pol=="R"
+corr.data2$DState<-corr.data2$state.pol=="D"
+corr.data2$SState<-corr.data2$state.pol=="S"
+corr.data2$RState<-as.numeric(corr.data2$RState)
+corr.data2$DState<-as.numeric(corr.data2$DState)
+corr.data2$SState<-as.numeric(corr.data2$SState)
+corr.data2$state.pol=NULL
 
 cor(corr.data, use="complete")
+cor(corr.data2, use="complete")
 
 #output of tables
 screenreg(full.pol.diff)
@@ -291,7 +301,7 @@ htmlreg(full.pol.diff)
 screenreg(full.PVS)
 htmlreg(full.PVS)
 
-stargazer(cor(corr.data, use="complete"), type="html")
+stargazer(cor(corr.data2, use="complete"), type="html")
 
 #look at risiduals and distributions of variables.
 summary(pv.recoded$inst.PV.y)
@@ -304,7 +314,7 @@ summary(pv.recoded$male)
 summary(pv.recoded$non.white)
 
 summary(pv.recoded$state.pol)
-#This ended up not being relevant, so I probably don't need to include it. 
+#This ended up not being used. 
 
 #for the original data
 summary(pv.SF$PVF)
@@ -330,25 +340,3 @@ sd(pv.recoded$pol.diff)
 #Residuals
 hist(residuals(full.pol.diff))
 hist(residuals(full.PVS))
-
-#come back and plot residuals later.
-
-#do a few examples for each model
-#PVS model
-#a white man studying social science who is moderate at a perfectly moderate university
-#now same, but a liberal at a conservative university
-#now with him studying humanities
-#now make him a minority woman
-
-#a minority woman studying Humanities at a liberal university who is liberal
-#a white man studying "other" at a conservative university who is conservative
-
-#pol.diff model
-#a white man studying social science at a perfectly moderate university
-#now at a conservative university
-#now at a liberal university
-#now with him studying humanities
-#now make him a minority woman
-
-#a minority woman studying Humanities at a liberal university
-#a white man studying "other" at a conservative university
