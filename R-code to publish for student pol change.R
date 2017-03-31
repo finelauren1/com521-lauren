@@ -11,8 +11,7 @@ pv.SF<-data.frame(CSS_TRENDS_94_06$YEAR,
                 CSS_TRENDS_94_06$POLIVIEW, 
                 CSS_TRENDS_94_06$POLIVIEW_TFS, 
                 CSS_TRENDS_94_06$MAJOR1A, 
-                CSS_TRENDS_94_06$GENACT11, 
-                CSS_TRENDS_94_06$CLIMATE8)
+                CSS_TRENDS_94_06$GENACT11)
 
 library(plyr)
 pv.SF<-rename(pv.SF, c("CSS_TRENDS_94_06.YEAR"="year", 
@@ -26,8 +25,7 @@ pv.SF<-rename(pv.SF, c("CSS_TRENDS_94_06.YEAR"="year",
                      "CSS_TRENDS_94_06.POLIVIEW"="PVS", 
                      "CSS_TRENDS_94_06.POLIVIEW_TFS"="PVF", 
                      "CSS_TRENDS_94_06.MAJOR1A"="major", 
-                     "CSS_TRENDS_94_06.GENACT11"="Pol.Discuss",
-                     "CSS_TRENDS_94_06.CLIMATE8"="inst.pol"))
+                     "CSS_TRENDS_94_06.GENACT11"="Pol.Discuss"))
 
 #I only want to look at data that has Poliview for both senior and freshman year
 pv.SF<-pv.SF[complete.cases(pv.SF[,9:10]),]
@@ -119,13 +117,14 @@ table(pv.recoded$state.pol)
 
 #recode major by category
 major.categories<-c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16)
-major.types<-c("SS", "STEM", "SS", "SS", "STEM", "Hum", "Other", "SS", "Hum", "Hum", 
+major.types<-c("SS", "STEM", "SS", "SS", "STEM", "Hum", "STEM", "SS", "Hum", "Hum", 
                "STEM", "STEM", "SS", "STEM", "Other", "Other")
 majors<-data.frame(major.categories, major.types)
 pv.recoded<-merge(pv.recoded, majors, by.x="major", by.y="major.categories")
 
 pv.recoded<-merge(pv.recoded, means.inst, by.x="inst", by.y="inst")
 #pv.recoded now has major categories, state politics, inst politics, gender, race
+pv.recoded<-
 #in order to categorize all of these things, we had to exclude quite a bit--now we only have 103,090
 
 #fix major types order
@@ -136,8 +135,8 @@ pv.recoded$major.types<- factor(pv.recoded$major.types,levels(pv.recoded$major.t
 #add a variable that separates race according to white or not white
 pv.recoded$non.white<-pv.recoded$race!=5
 
-pv.recoded<-pv.recoded[complete.cases(pv.recoded[,15,19]),]
-pv.recoded<-pv.recoded[complete.cases(pv.recoded[,21]),]
+pv.recoded<-pv.recoded[complete.cases(pv.recoded[,14,18]),]
+pv.recoded<-pv.recoded[complete.cases(pv.recoded[,20]),]
 
 aggregate(pv.recoded$PVS, list(pv.recoded$yearsince1994), mean)
 aggregate(pv.SF$PVS, list(pv.SF$yearsince1994), mean)
